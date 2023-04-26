@@ -1,0 +1,10 @@
+---
+all:
+  children:
+    web_servers:
+      hosts:
+        18.215.179.59
+      vars: 
+        http_port:  80
+      
+  

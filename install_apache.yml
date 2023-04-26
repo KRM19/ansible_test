@@ -1,22 +1,29 @@
 ---
 
-- hosts: all
+- hosts: web_servers
   become: true
+  remote_user:  ubuntu
   tasks:
 
-  - name: update repository index
-    apt:
-      update_cache: yes
-      remote_user: ubuntu
+    - name: update repository index
+      shell: whoami
+      register: cmd_output
+    - name: View var
+      debug:
+        var: cmd_output
+        #update_cache: yes
 
-  - name: install apache2 package
-    apt:
-      name: apache2
-      state: latest
-      remote_user: ubuntu
+    - name: update repository index
+      package:
+        update_cache: yes
+        
 
-  - name: add php support for apache
-    apt:
-      name: libapache2-mod-php
-      state: latest
-      remote_user: ubuntu
+    - name: install apache2 package
+      package:
+        name: apache2
+        state: latest
+
+    - name: add php support for apache
+      package:
+        name: libapache2-mod-php
+        state: latest
