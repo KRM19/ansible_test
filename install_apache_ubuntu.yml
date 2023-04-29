@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  remote_user: ubuntu
+  tasks:
+
+    - name: installed apache on ubuntu instances
+      apt:
+        name: apache2
+        state: latest

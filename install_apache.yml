@@ -1,6 +1,6 @@
 ---
 
-- hosts: web_servers
+- hosts: all
   become: true
   remote_user:  ubuntu
   tasks:
@@ -21,9 +21,9 @@
     - name: install apache2 package
       package:
         name: apache2
-        state: latest
+        state: absent
 
     - name: add php support for apache
       package:
         name: libapache2-mod-php
-        state: latest
+        state: absent

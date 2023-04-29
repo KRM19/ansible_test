@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: true
+  remote_user: ubuntu
+  tasks:
+    - name: updating repository index
+      apt:
+        update_cache: true
+
+    - name: removing apache2 package from both ubuntu instances
+      apt:
+        name: apache2
+        state: absent
+    
+    - name: removing php support for apache2 from both ubuntu instances
+      apt:
+        name: libapache2-mod-php
+        latest: absent
+        #autoremove: true [ will not work and and also other than state nothing will work ex: install: true  ]

@@ -1,0 +1,23 @@
+---
+- hosts: web_servers
+  become: true
+  remote_user: ubuntu
+  tasks:
+    - name: update repository index
+      package:
+        update_cache: yes
+
+    - name: installing apache pkg
+      package:
+        name: apache2
+        state: latest
+        #state: started
+        
+
+    - name: installing php pkg
+      package:
+        name: php
+        state: latest
+        #state: started
+        
+        
