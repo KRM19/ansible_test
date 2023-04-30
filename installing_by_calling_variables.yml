@@ -1,0 +1,21 @@
+---
+    - hosts:  "{{ nodes }}"
+      #vars_files:
+      #vars/inventory.ini
+      become: true
+      gather_facts: False
+      remote_user: ubuntu
+      tasks:
+        
+
+        - name: checking ping
+          ping:
+
+      
+        - name: install apache2 and php [ multiple packages ] in a  single module
+          package:
+            name:
+              - "{{  apache_package  }}"
+              -  "{{  php_package  }}"
+            state: latest
+            update_cache: yes

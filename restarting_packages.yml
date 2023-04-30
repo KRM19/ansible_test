@@ -1,0 +1,32 @@
+---
+    - hosts: web_servers
+      become: true
+      remote_user: ubuntu
+      tasks:
+        
+
+        - name: checking ping
+          ping:
+
+
+        - name: update repository index
+          package:
+            update_cache: yes
+
+        
+    
+        - name: install apache2 and php [ multiple packages ] in a  single module
+          package:
+            name:
+              - apache2
+              - libapache2-mod-php
+            state: latest
+          notify: restart package
+          when: ansible_distribution_version == "Ubuntu"
+    
+    
+      
+        - name: restart package
+          service:
+            name: apache2
+            state: restarted

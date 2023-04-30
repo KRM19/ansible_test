@@ -1,0 +1,60 @@
+---
+
+    - hosts: all
+      become: true
+      remote_user:  ubuntu
+      tasks:
+    
+        
+    
+        - name: update repository index
+          package:
+            update_cache: yes
+            
+    
+    - hosts: work_stations
+      become: true
+      remote_user: ubuntu
+      tasks:
+
+        - name: install unzip
+          package:
+            name: unzip
+
+        - name: install terraform
+          unarchive:
+            src: https://releases.hashicorp.com/terraform/1.0.7/terraform_1.0.7_linux_amd64.zip
+            dest: /usr/local/bin
+            remote_src: yes
+            owner: root
+            group: root
+            mode: 0755
+
+
+ 
+
+        - name: install apache2 package
+        #hostname or groupname , service name , package name 
+          tags: ubuntu,apache,apache2
+          package:
+            name: apache2
+            state: latest
+
+        - name: Copy default html files for site on ubuntu
+          tags: ubuntu,apache,apache2,httpd
+          copy:
+            src: default.html
+            dest: /var/www/html/index1.html
+            owner: root
+            group: root
+            mode: 0644
+    
+        - name: add php support for apache
+          tags: ubuntu,php,libapache2-mod-php
+          package:
+            name: libapache2-mod-php
+            state: latest
+    
+
+
+    

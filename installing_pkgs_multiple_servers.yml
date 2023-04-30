@@ -1,0 +1,59 @@
+---
+- hosts: all
+  #become: true
+  remote_user: ec2-user
+  tasks:
+
+    - name: update repository index
+      shell: whoami
+      register: cmd_output
+
+    - name: View var
+      debug:
+        var: cmd_output
+
+    - name: udpate repository index
+      package:
+        udpate_cache: true
+        #remote_user: ubuntu
+      #when:  ansible_distribution == "Ubuntu"
+    
+
+    - name: install apache2 in ubuntu instances
+      package:
+        name: apache2
+        state: latest
+        #remote_user: ubuntu
+      #when:  ansible_distribution == "Ubuntu"
+
+
+    - name: install php support on ubuntu instances
+      package:
+        name: libapache2-mod-php
+        state: latest
+        #remote_user: ubuntu
+      #when:  ansible_distribution == "Ubuntu"
+
+
+
+
+    - name: udpate repository index
+      yum:
+        udpate_cache: true
+        #remote_user: ec2-user
+      #when:  ansible_distribution == "Red Hat"
+
+
+    - name: install webserver in redhat instances
+      yum:
+        name: httpd
+        state: latest
+        #remote_user: ec2-user
+      #when:  ansible_distribution == "Red Hat"
+
+    - name: install php on redhat instances
+      yum:
+        name:  php
+        state: latest
+        #remote_user: ec2-user
+      #when:  ansible_distribution == "Red Hat"
