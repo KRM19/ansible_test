@@ -1,9 +1,15 @@
+
+
 - name: install apache2 package
-        #hostname or groupname , service name , package name 
+  #hostname or groupname , service name , package name 
   tags: ubuntu,apache,apache2
   package:
-    name: apache2
+    name:
+      - "{{  apache_package_name  }}"
     state: latest
+
+
+
 
 - name: Copy default html files for site on ubuntu
   tags: ubuntu,apache,apache2,httpd
@@ -17,5 +23,6 @@
 - name: add php support for apache
   tags: ubuntu,php,libapache2-mod-php
   package:
-    name: libapache2-mod-php
+    name: 
+      - "{{  php_package_name  }}"
     state: latest

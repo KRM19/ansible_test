@@ -1,0 +1,44 @@
+---
+
+    - hosts: all
+      become: true
+      remote_user:  ubuntu
+      pre_tasks:
+    
+        - name: update repository cache on ubuntu servers which is already updated from bootstrap file 
+          tags: always
+          package:
+            upgrade: dist
+            update_cache: yes
+          changed_when: false
+        
+    - hosts: all
+      become: true 
+      roles:
+        - base
+
+    - hosts: work_stations
+      become: true 
+      roles:
+        - work_stations
+
+    - hosts: web_servers
+      become: true 
+      roles:
+        - web_servers
+      
+
+    - hosts: db_servers
+      become: true 
+      roles:
+        - db_servers
+
+    - hosts: file_servers
+      become: true 
+      roles: 
+        - file_servers
+
+
+
+
+   
