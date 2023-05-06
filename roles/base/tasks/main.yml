@@ -1,0 +1,8 @@
+- name: add ssh key for user2
+  tags: always
+  authorized_key:
+    user: user2
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCKQnk3754Hq9KQQyPuU1MGrIKDrIHCKqHznGtAQJ7+dB3NaqGxg3IPFALuRZD7CpiMI3JL8Phg/PwDg703NaE4cHQdXP+DuesGFMY0/t6J3ZGKJ4SWt/gV/QXroPgG6AwfiKIc01Awkw1jXZJQthaBfG8Cd8XRlW/QbEkF5Va5nx/Pdp3Ielwd6w7NBu7eqQ0VK1GfCF/WCErhLPDlOOIk1aB2SJGErxp2+1phibN8FXwJ3fmTKAbKl5k7TbGzC4LI1kqKPl+cS3b5XLpOaKTPeWtv40z/ne3NAXcvEKv1YxtKdrM5On5Bhyws8rH7VNelyv6Ms9ewckC4TwnlUi7T team_prudent"
+
+       
+            

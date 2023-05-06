@@ -1,0 +1,5 @@
+- name: install the mariadb server in ubuntu
+  tags: db, mariadb, ubuntu
+  package:
+    name: mariadb-server
+    state: latest
