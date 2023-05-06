@@ -1,0 +1,85 @@
+---
+
+    - hosts: all
+      become: true
+      remote_user:  ubuntu
+      tasks:
+    
+        
+    
+        - name: update repository index
+          package:
+            update_cache: yes
+            
+    - hosts: all
+      become: true
+      remote_user: ubuntu
+      tasks:
+
+        - name: create user ranga
+          tags: always
+          user:
+            name: ranga
+            groups: root
+
+        - name: add ssh key for ranga
+          tags: always
+          authorized_key:
+            user: ranga
+            key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCKQnk3754Hq9KQQyPuU1MGrIKDrIHCKqHznGtAQJ7+dB3NaqGxg3IPFALuRZD7CpiMI3JL8Phg/PwDg703NaE4cHQdXP+DuesGFMY0/t6J3ZGKJ4SWt/gV/QXroPgG6AwfiKIc01Awkw1jXZJQthaBfG8Cd8XRlW/QbEkF5Va5nx/Pdp3Ielwd6w7NBu7eqQ0VK1GfCF/WCErhLPDlOOIk1aB2SJGErxp2+1phibN8FXwJ3fmTKAbKl5k7TbGzC4LI1kqKPl+cS3b5XLpOaKTPeWtv40z/ne3NAXcvEKv1YxtKdrM5On5Bhyws8rH7VNelyv6Ms9ewckC4TwnlUi7T team_prudent"
+
+        - name: add sudoers file to the ranga
+          tags: always
+          copy:
+            src: sudoer_ranga
+            dest: /etc/sudoers.d/ranga
+            owner: root
+            group: root
+            mode: 0440
+            
+
+
+    - hosts: work_stations
+      become: true
+      remote_user: ubuntu
+      tasks:
+
+        - name: install unzip
+          package:
+            name: unzip
+
+        - name: install terraform
+          unarchive:
+            src: https://releases.hashicorp.com/terraform/1.0.7/terraform_1.0.7_linux_amd64.zip
+            dest: /usr/local/bin
+            remote_src: yes
+            owner: root
+            group: root
+            mode: 0755
+
+ 
+
+        - name: install apache2 package
+        #hostname or groupname , service name , package name 
+          tags: ubuntu,apache,apache2
+          package:
+            name: apache2
+            state: latest
+
+        - name: Copy default html files for site on ubuntu
+          tags: ubuntu,apache,apache2,httpd
+          copy:
+            src: default.html
+            dest: /var/www/html/index1.html
+            owner: root
+            group: root
+            mode: 0644
+    
+        - name: add php support for apache
+          tags: ubuntu,php,libapache2-mod-php
+          package:
+            name: libapache2-mod-php
+            state: latest
+    
+
+

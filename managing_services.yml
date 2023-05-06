@@ -1,0 +1,30 @@
+---
+
+    - hosts: all
+      become: true
+      remote_user:  ubuntu
+      tasks:
+    
+        
+    
+        - name: update repository index
+          package:
+            update_cache: yes
+            
+  
+        - name: install apache2 package
+        #hostname or groupname , service name , package name 
+          tags: ubuntu,apache,apache2
+          package:
+            name: apache2
+            state: latest
+            
+          
+
+        - name: start apache service
+          tags: ubuntu,apache,apache2
+          service:
+            name: apache2
+            state: started
+            enabled: true
+          when: ansible_distribution == "Ubuntu"
